@@ -1,5 +1,6 @@
 package br.com.zupacademy.frederico.treinomercadolivre.treinomercadolivre.dominio.usuario.dto;
 
+import br.com.zupacademy.frederico.treinomercadolivre.treinomercadolivre.annotation.UniqueValue;
 import br.com.zupacademy.frederico.treinomercadolivre.treinomercadolivre.dominio.usuario.SenhaLimpa;
 import br.com.zupacademy.frederico.treinomercadolivre.treinomercadolivre.dominio.usuario.Usuario;
 
@@ -12,6 +13,9 @@ public class UsuarioRequest {
     private String nome;
     @Email
     @NotBlank
+    @UniqueValue(fieldName = "login",
+            domainClass = Usuario.class,
+            message = "Já existe um(a) usuário(a) cadastrado(a) com esse e-mail")
     private String login;
     @NotBlank
     @Size(min = 6)
