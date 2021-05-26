@@ -1,6 +1,8 @@
 package br.com.zupacademy.frederico.treinomercadolivre.treinomercadolivre.dominio.produto;
 
 import br.com.zupacademy.frederico.treinomercadolivre.treinomercadolivre.dominio.categoria.Categoria;
+import br.com.zupacademy.frederico.treinomercadolivre.treinomercadolivre.dominio.fotos.Foto;
+import br.com.zupacademy.frederico.treinomercadolivre.treinomercadolivre.dominio.fotos.FotoProduto;
 import br.com.zupacademy.frederico.treinomercadolivre.treinomercadolivre.dominio.produto.dto.CaracteristicaRequest;
 import br.com.zupacademy.frederico.treinomercadolivre.treinomercadolivre.dominio.usuario.Usuario;
 import org.hibernate.validator.constraints.Length;
@@ -37,6 +39,13 @@ public class Produto {
     private Categoria categoria;
     @ManyToOne
     private Usuario usuario;
+    @OneToMany(mappedBy = "produto", cascade=CascadeType.MERGE)
+    private List<FotoProduto> fotos;
+
+
+    @Deprecated
+    public Produto() {
+    }
 
     public Produto(String nome, BigDecimal valor, int quantidadeDisponivel,
                    List<CaracteristicaRequest> caracteristicas, String descrição,
@@ -56,4 +65,13 @@ public class Produto {
         return caracteristica.toModel(this);
     }
 
+    public boolean pertenceUsuario(Usuario usuarioLogado) {
+        return this.usuario.equals(usuarioLogado);
+    }
+
+    public void adicionaFotos(List<Foto> fotos) {
+        this.fotos = fotos.stream()
+                .map(foto -> new FotoProduto(foto.getLink(), foto.getNome(),this))
+                .collect(Collectors.toList());
+    }
 }
