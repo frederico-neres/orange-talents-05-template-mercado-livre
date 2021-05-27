@@ -74,4 +74,8 @@ public class Produto {
                 .map(foto -> new FotoProduto(foto.getLink(), foto.getNome(),this))
                 .collect(Collectors.toList());
     }
+
+    public String getUsuarioEmail() {
+        return this.usuario.getLogin();
+    }
 }
