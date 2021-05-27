@@ -27,4 +27,12 @@ public class FotoProduto {
         this.nome = nome;
         this.produto = produto;
     }
+
+    public String getLink() {
+        return link;
+    }
+
+    public String getNome() {
+        return nome;
+    }
 }

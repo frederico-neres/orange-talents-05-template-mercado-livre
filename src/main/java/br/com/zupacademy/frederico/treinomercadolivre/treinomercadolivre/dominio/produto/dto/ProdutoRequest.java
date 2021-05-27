@@ -27,25 +27,25 @@ public class ProdutoRequest {
     private List<CaracteristicaRequest> caracteristicas;
     @NotBlank
     @Length(max = 1000)
-    private  String descrição;
+    private  String descricao;
     @NotNull
     private Long idCategoria;
 
     public ProdutoRequest(@NotBlank String nome, @NotNull @Positive BigDecimal valor,
                           @NotNull @Positive int quantidadeDisponivel,
                           @Size(min = 3) @Valid List<CaracteristicaRequest> caracteristicas,
-                          @NotBlank @Length(max = 1000) String descrição,@NotNull Long idCategoria) {
+                          @NotBlank @Length(max = 1000) String descricao,@NotNull Long idCategoria) {
         this.nome = nome;
         this.valor = valor;
         this.quantidadeDisponivel = quantidadeDisponivel;
         this.caracteristicas = caracteristicas;
-        this.descrição = descrição;
+        this.descricao = descricao;
         this.idCategoria = idCategoria;
     }
 
     public Produto toModel(EntityManager entityManager, Usuario usuarioLogado) {
         Categoria categoria = entityManager.find(Categoria.class, idCategoria);
         return new Produto(nome, valor, quantidadeDisponivel, caracteristicas,
-                descrição, categoria, usuarioLogado);
+                descricao, categoria, usuarioLogado);
     }
 }

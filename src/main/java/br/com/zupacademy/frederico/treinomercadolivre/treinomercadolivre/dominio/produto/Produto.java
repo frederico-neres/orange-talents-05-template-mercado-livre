@@ -3,6 +3,7 @@ package br.com.zupacademy.frederico.treinomercadolivre.treinomercadolivre.domini
 import br.com.zupacademy.frederico.treinomercadolivre.treinomercadolivre.dominio.categoria.Categoria;
 import br.com.zupacademy.frederico.treinomercadolivre.treinomercadolivre.dominio.fotos.Foto;
 import br.com.zupacademy.frederico.treinomercadolivre.treinomercadolivre.dominio.fotos.FotoProduto;
+import br.com.zupacademy.frederico.treinomercadolivre.treinomercadolivre.dominio.pergunta.Pergunta;
 import br.com.zupacademy.frederico.treinomercadolivre.treinomercadolivre.dominio.produto.dto.CaracteristicaRequest;
 import br.com.zupacademy.frederico.treinomercadolivre.treinomercadolivre.dominio.usuario.Usuario;
 import org.hibernate.validator.constraints.Length;
@@ -34,21 +35,22 @@ public class Produto {
     private List<Caracteristica> caracteristicas;
     @NotBlank
     @Length(max = 1000)
-    private String descrição;
+    private String descricao;
     @ManyToOne
     private Categoria categoria;
     @ManyToOne
     private Usuario usuario;
     @OneToMany(mappedBy = "produto", cascade=CascadeType.MERGE)
     private List<FotoProduto> fotos;
-
+    @OneToMany(mappedBy = "produto")
+    private List<Pergunta> perguntas;
 
     @Deprecated
     public Produto() {
     }
 
     public Produto(String nome, BigDecimal valor, int quantidadeDisponivel,
-                   List<CaracteristicaRequest> caracteristicas, String descrição,
+                   List<CaracteristicaRequest> caracteristicas, String descricao,
                    Categoria categoria, Usuario usuarioLogado) {
 
         this.nome = nome;
@@ -56,7 +58,7 @@ public class Produto {
         this.quantidadeDisponivel = quantidadeDisponivel;
         this.caracteristicas = caracteristicas.stream().map(this::pegarEntidadeCaracteristica)
                 .collect(Collectors.toList());
-        this.descrição = descrição;
+        this.descricao = descricao;
         this.categoria = categoria;
         this.usuario = usuarioLogado;
     }
@@ -77,5 +79,29 @@ public class Produto {
 
     public String getUsuarioEmail() {
         return this.usuario.getLogin();
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public List<Caracteristica> getCaracteristicas() {
+        return caracteristicas;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public List<Pergunta> getPerguntas() {
+        return perguntas;
+    }
+
+    public List<FotoProduto> getFotos() {
+        return fotos;
     }
 }

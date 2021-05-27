@@ -28,6 +28,10 @@ public class Opiniao {
     @ManyToOne
     private Produto produto;
 
+    @Deprecated
+    public Opiniao() {
+    }
+
     public Opiniao(@Min(1) @Max(5) int nota, @NotBlank String titulo, @NotBlank @Size(max = 500) String descricao,
                    Usuario usuarioLogado, Produto produto) {
         this.nota = nota;
@@ -35,5 +39,17 @@ public class Opiniao {
         this.descricao = descricao;
         this.usuarioLogado = usuarioLogado;
         this.produto = produto;
+    }
+
+    public int getNota() {
+        return nota;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public String getDescricao() {
+        return descricao;
     }
 }
