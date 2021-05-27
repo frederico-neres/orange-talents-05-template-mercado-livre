@@ -1,6 +1,8 @@
 package br.com.zupacademy.frederico.treinomercadolivre.treinomercadolivre.dominio.categoria.dto;
 
+import br.com.zupacademy.frederico.treinomercadolivre.treinomercadolivre.annotation.UniqueValue;
 import br.com.zupacademy.frederico.treinomercadolivre.treinomercadolivre.dominio.categoria.Categoria;
+import br.com.zupacademy.frederico.treinomercadolivre.treinomercadolivre.dominio.usuario.Usuario;
 
 import javax.persistence.EntityManager;
 import javax.validation.constraints.NotBlank;
@@ -8,6 +10,9 @@ import javax.validation.constraints.NotBlank;
 public class CategoriaRequest {
 
     @NotBlank
+    @UniqueValue(fieldName = "nome",
+            domainClass = Categoria.class,
+            message = "Já existe uma categoria cadastrada com esse nome")
     private String nome;
     private Long idCategoriaMae;
 
