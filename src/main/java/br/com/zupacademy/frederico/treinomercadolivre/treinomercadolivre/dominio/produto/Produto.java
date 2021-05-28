@@ -104,4 +104,14 @@ public class Produto {
     public List<FotoProduto> getFotos() {
         return fotos;
     }
+
+    public boolean abaterQuantidadeDisponivel(int quantidade) {
+        if(this.quantidadeDisponivel >= quantidade) {
+
+            this.quantidadeDisponivel -= quantidade;
+            return true;
+        }
+
+        return false;
+    }
 }
