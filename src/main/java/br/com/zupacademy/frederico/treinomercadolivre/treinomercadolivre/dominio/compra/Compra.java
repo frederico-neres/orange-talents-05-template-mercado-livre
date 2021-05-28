@@ -30,7 +30,7 @@ public class Compra {
     private Usuario usuario;
     private BigDecimal valorMomento;
 
-    public Compra(GatewayType gateway, Produto produto, int quantidade, Usuario usuario) {
+    public Compra( @NotNull GatewayType gateway, Produto produto, @NotNull @Positive int quantidade, Usuario usuario) {
         this.gateway = gateway;
         this.produto = produto;
         this.valorMomento = produto.getValor();

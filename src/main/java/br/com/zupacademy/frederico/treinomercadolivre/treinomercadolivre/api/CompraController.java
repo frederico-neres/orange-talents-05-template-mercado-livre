@@ -7,6 +7,7 @@ import br.com.zupacademy.frederico.treinomercadolivre.treinomercadolivre.dominio
 import br.com.zupacademy.frederico.treinomercadolivre.treinomercadolivre.dominio.email.EmailSenderType;
 import br.com.zupacademy.frederico.treinomercadolivre.treinomercadolivre.dominio.produto.Produto;
 import br.com.zupacademy.frederico.treinomercadolivre.treinomercadolivre.dominio.usuario.Usuario;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,7 +54,7 @@ public class CompraController {
             String urlRedirect = compra.getGateway()
                     .getUrlRedirect(uriComponentsBuilder, compra.getId());
 
-            return ResponseEntity.ok(urlRedirect);
+            return ResponseEntity.status(HttpStatus.FOUND).body(urlRedirect);
         }
 
         return ResponseEntity.badRequest().build();
