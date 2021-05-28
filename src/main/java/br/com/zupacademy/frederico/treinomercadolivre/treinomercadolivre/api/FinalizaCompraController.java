@@ -1,9 +1,11 @@
 package br.com.zupacademy.frederico.treinomercadolivre.treinomercadolivre.api;
 
 import br.com.zupacademy.frederico.treinomercadolivre.treinomercadolivre.dominio.compra.Compra;
+import br.com.zupacademy.frederico.treinomercadolivre.treinomercadolivre.dominio.pagamento.ObservablePagamento;
 import br.com.zupacademy.frederico.treinomercadolivre.treinomercadolivre.dominio.pagamento.dto.GatewayRequest;
 import br.com.zupacademy.frederico.treinomercadolivre.treinomercadolivre.dominio.pagamento.dto.PagseguroRequest;
 import br.com.zupacademy.frederico.treinomercadolivre.treinomercadolivre.dominio.pagamento.dto.PaypalRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +23,9 @@ public class FinalizaCompraController {
 
     @PersistenceContext
     EntityManager entityManager;
+
+    @Autowired
+    ObservablePagamento observablePagamento;
 
     @PostMapping("/paypal/{id}")
     @Transactional
@@ -42,7 +47,9 @@ public class FinalizaCompraController {
             return ResponseEntity.badRequest().build();
         }
 
+        observablePagamento.executa(compra);
+
         entityManager.merge(compra);
-        return ResponseEntity.ok(compra);
+        return ResponseEntity.ok(null);
     }
 }

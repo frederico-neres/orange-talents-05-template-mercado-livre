@@ -48,6 +48,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/api/auth").permitAll()
                 .antMatchers("/api/detalhes/**").permitAll()
+                .antMatchers("/nota-fiscal/**").permitAll()
+                .antMatchers("/ranking/**").permitAll()
                 .antMatchers("/api/usuarios").permitAll()
                 .anyRequest().authenticated()
                 .and().csrf().disable()

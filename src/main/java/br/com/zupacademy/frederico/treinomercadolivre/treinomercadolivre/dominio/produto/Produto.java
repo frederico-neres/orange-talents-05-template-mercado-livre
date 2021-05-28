@@ -81,6 +81,10 @@ public class Produto {
         return this.usuario.getLogin();
     }
 
+    public Long getUsuarioId() {
+        return this.usuario.getId();
+    }
+
     public String getNome() {
         return nome;
     }

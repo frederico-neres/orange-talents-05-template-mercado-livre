@@ -49,8 +49,26 @@ public class Compra {
         this.status = CompraStatus.INICIADA;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
+    }
+
+    public Long getIdUsuario() {
+        return usuario.getId();
+    }
+
+    public Long getIdProdutoUsuario() {
+        return produto.getUsuarioId();
+    }
+    public String getProdutoUsuarioEmail() {
+        return produto.getUsuarioEmail();
+    }
+    public String getProdutoNome() {
+        return produto.getNome();
+    }
+
+    public int getQuantidade() {
+        return quantidade;
     }
 
     public GatewayType getGateway() {
@@ -62,10 +80,8 @@ public class Compra {
 
         boolean contains = this.transacoes.contains(newTransacao);
         if(contains) { return false; }
-        List<Transacao> concluidos = this.transacoes.stream()
-                .filter(Transacao::isStatusSucesso).collect(Collectors.toList());
 
-        if(!concluidos.isEmpty()) { return false; }
+        if(isTransacaoConcluida()) { return false; }
 
         this.transacoes.add(newTransacao);
         return true;
@@ -73,5 +89,16 @@ public class Compra {
 
     public List<Transacao> getTransacoes() {
         return transacoes;
+    }
+
+    private List<Transacao> getTransacaoConcluidos () {
+        List<Transacao> concluidos = this.transacoes.stream()
+                .filter(Transacao::isStatusSucesso).collect(Collectors.toList());
+        return concluidos;
+    }
+
+    public boolean isTransacaoConcluida() {
+        List<Transacao> concluidos = getTransacaoConcluidos();
+        return !concluidos.isEmpty();
     }
 }
