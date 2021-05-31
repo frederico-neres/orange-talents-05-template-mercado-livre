@@ -1,6 +1,8 @@
 package br.com.zupacademy.frederico.treinomercadolivre.treinomercadolivre.api;
 
 import br.com.zupacademy.frederico.treinomercadolivre.treinomercadolivre.dominio.compra.Compra;
+import br.com.zupacademy.frederico.treinomercadolivre.treinomercadolivre.dominio.compra.CompraStatus;
+import br.com.zupacademy.frederico.treinomercadolivre.treinomercadolivre.dominio.compra.dto.CompraFinalizadaResponse;
 import br.com.zupacademy.frederico.treinomercadolivre.treinomercadolivre.dominio.pagamento.ObservablePagamento;
 import br.com.zupacademy.frederico.treinomercadolivre.treinomercadolivre.dominio.pagamento.dto.GatewayRequest;
 import br.com.zupacademy.frederico.treinomercadolivre.treinomercadolivre.dominio.pagamento.dto.PagseguroRequest;
@@ -48,8 +50,9 @@ public class FinalizaCompraController {
         }
 
         observablePagamento.executa(compra);
+        CompraStatus compraStatus = compra.statusParaFinalizada();
 
         entityManager.merge(compra);
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok(new CompraFinalizadaResponse(compraStatus));
     }
 }

@@ -75,6 +75,14 @@ public class Compra {
         return gateway;
     }
 
+    public CompraStatus statusParaFinalizada() {
+        if(isTransacaoConcluida()) {
+            this.status = CompraStatus.FINALIZADA;
+        }
+        return this.status;
+    }
+
+
     public boolean finalizaPagamento(GatewayRequest request) {
         Transacao newTransacao = request.toTransacao(this);
 
